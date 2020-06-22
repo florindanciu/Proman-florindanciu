@@ -23,6 +23,16 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/board/<int:id>/delete", methods=['POST'])
+def delete_board(id):
+    data_handler.delete_board(id)
+
+
+@app.route("/board/<int:board_id>/collumn/<int:collumn_id>/delete", methods=['POST'])
+def delete_collumn(board_id, collumn_id):
+    data_handler.delete_collumn(board_id, collumn_id)
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):
@@ -31,6 +41,11 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return data_handler.get_cards_for_board(board_id)
+
+
+@app.route("/card/<int:id>/delete", methods=['POST'])
+def delete_card(id):
+    data_handler.delete_card(id)
 
 
 def main():
