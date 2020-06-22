@@ -20,7 +20,8 @@ CREATE TABLE cards (
 
 CREATE TABLE users (
     id serial primary key,
-    username varchar(50) NOT NULL,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
     email varchar(100) NOT NULL,
     password varchar(150) NOT NULL
 );
@@ -44,8 +45,8 @@ INSERT INTO cards(board_id, title, status_id, cards_order)
     (2,'done card 1',4,0),
     (2,'done card 1',4,1);
 
--- ALTER SEQUENCE cards_id_seq RESTART WITH 1;
--- UPDATE cards SET id=nextval('cards_id_seq');
+-- ALTER SEQUENCE users_id_seq RESTART WITH 1;
+-- UPDATE users SET id=nextval('users_id_seq');
 
 
 
