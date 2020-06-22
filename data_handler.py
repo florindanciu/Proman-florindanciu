@@ -32,6 +32,16 @@ def delete_card(cursor: RealDictCursor, id) -> list:
 
 
 @database_common.connection_handler
+def archive_card(cursor: RealDictCursor, id, state=True) -> list:
+    query = """
+        UPDATE cards
+        SET archived = %s
+        WHERE cards.id = %s
+        """
+    cursor.execute(query, (state == True, id, ))
+
+
+@database_common.connection_handler
 def delete_collumn(cursor: RealDictCursor, boardId, statusId) -> list:
     query = """
         DELETE FROM board_statuses 

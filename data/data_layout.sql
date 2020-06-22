@@ -24,6 +24,7 @@ CREATE TABLE cards (
     title varchar,
     status_id integer,
     cards_order integer,
+    archived boolean DEFAULT(false),
     FOREIGN KEY (board_id, status_id) REFERENCES board_statuses (board_id, status_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

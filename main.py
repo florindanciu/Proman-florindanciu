@@ -43,6 +43,16 @@ def get_cards_for_board(board_id: int):
     return data_handler.get_cards_for_board(board_id)
 
 
+@app.route("/card/<int:id>/archive", methods=['POST'])
+def archive_card(id):
+    data_handler.archive_card(id)
+
+
+@app.route("/card/<int:id>/dearchive", methods=['POST'])
+def dearchive_card(id):
+    data_handler.archive_card(id, False)
+
+
 @app.route("/card/<int:id>/delete", methods=['POST'])
 def delete_card(id):
     data_handler.delete_card(id)
