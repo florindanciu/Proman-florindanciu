@@ -14,3 +14,30 @@ import database_common
 #     cursor.execute(query)
 #     return cursor.fetchall()
 
+
+@database_common.connection_handler
+def get_boards(cursor: RealDictCursor) -> list:
+    query = """
+            SELECT *
+            FROM boards
+            ORDER BY id"""
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@database_common.connection_handler
+def add_board(cursor: RealDictCursor, title) -> list:
+    query = """
+            INSERT INTO boards (title)
+            VALUES (%s);"""
+    cursor.execute(query, (title,))
+
+@database_common.connection_handler
+def update_board_title(cursor: RealDictCursor, title) -> list:
+    query = """
+        UPDATE boards
+        SET title = %s 
+        WHERE id = %s;
+        """
+    cursor.execute(query, (title,))
+
+

@@ -25,7 +25,7 @@ CREATE TABLE users (
     password varchar(150) NOT NULL
 );
 
-INSERT INTO boards(title) VALUES ('board_1'), ('board_2');
+INSERT INTO boards(title) VALUES ('board_1'), ('board_2'), ('board_3');
 
 INSERT INTO statuses(title) VALUES ('new'),('in progress'), ('testing'), ('done');
 

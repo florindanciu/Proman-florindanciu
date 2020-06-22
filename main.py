@@ -1,17 +1,26 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, jsonify
 from util import json_response
 
 import data_handler
+import json
 
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
     """
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route("/add_board", methods=["GET", "POST"])
+def add_board():
+    if request.method == "POST":
+        new_board = json.loads(request.data.decode("utf-8"))["title"]
+        data_handler.add_board(new_board)
+    return 'ok'
 
 
 @app.route("/get-boards")
