@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS users, cards, board_statuses, statuses, boards;
+
 CREATE TABLE boards (
     id serial primary key,
     title text NOT NULL
@@ -8,14 +10,21 @@ CREATE TABLE statuses (
     title text NOT NULL
 );
 
+CREATE TABLE board_statuses (
+    board_id integer NOT NULL,
+    status_id integer NOT NULL,
+    FOREIGN KEY (board_id) REFERENCES boards (id) ON DELETE CASCADE,
+    FOREIGN KEY (status_id) REFERENCES statuses (id) ON DELETE CASCADE,
+    PRIMARY KEY (board_id, status_id)
+);
+
 CREATE TABLE cards (
     id serial primary key,
     board_id integer,
     title varchar,
     status_id integer,
     cards_order integer,
-    FOREIGN KEY (board_id) REFERENCES boards(id),
-    FOREIGN KEY (status_id) REFERENCES statuses(id)
+    FOREIGN KEY (board_id, status_id) REFERENCES board_statuses (board_id, status_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE users (
@@ -28,6 +37,16 @@ CREATE TABLE users (
 INSERT INTO boards(title) VALUES ('board_1'), ('board_2');
 
 INSERT INTO statuses(title) VALUES ('new'),('in progress'), ('testing'), ('done');
+
+INSERT INTO board_statuses
+    VALUES (1, 1),
+        (1, 2),
+        (1, 3),
+        (1, 4),
+        (2, 1),
+        (2, 2),
+        (2, 3),
+        (2, 4);
 
 INSERT INTO cards(board_id, title, status_id, cards_order)
     VALUES
@@ -46,7 +65,3 @@ INSERT INTO cards(board_id, title, status_id, cards_order)
 
 -- ALTER SEQUENCE cards_id_seq RESTART WITH 1;
 -- UPDATE cards SET id=nextval('cards_id_seq');
-
-
-
-
