@@ -25,9 +25,7 @@ export let dataHandler = {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())  // parse the response as JSON
-        // .then(json_response => callback(json_response));  // Call the `callback` with the returned object
-        // ToDo check promise status and callback
+        .then(response => callback(response));
     },
     init: function () {
     },
@@ -51,7 +49,7 @@ export let dataHandler = {
         // the status is retrieved and then the callback function is called with the status
     },
     getCardsByBoardId: function (boardId, callback) {
-        this._api_post('/get-cards', {'id': boardId}, (response) => {
+        this._api_get('/get-cards/' + boardId, (response) => {
             this._data['cards' + boardId] = response;
             callback(boardId, response);
         });
@@ -60,7 +58,9 @@ export let dataHandler = {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: function (boardTitle, callback) {
-        this._api_post('/add_board', {'title': boardTitle}, callback)
+        this._api_post('/add_board', {'title': boardTitle}, (response) => {
+            callback(response);
+        });
     },
     renameBoard: function (boardTitle, boardId, callback) {
         this._api_post('/rename_board', {'title': boardTitle, 'id': boardId}, callback)

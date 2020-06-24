@@ -14,8 +14,10 @@ function init() {
 
     document.getElementById("saveBoard").addEventListener("click", () => {
         let newTitle = document.querySelector("#newBoard").value
-        dataHandler.createNewBoard(newTitle, null) // <-- ToDo dom.loadBoards()
-        document.querySelector("#addBoardDiv").classList.toggle("hidden")
+        dataHandler.createNewBoard(newTitle, (data) => {
+            dom.loadBoards();
+        });
+        document.querySelector("#addBoardDiv").classList.toggle("hidden");
     });
 }
 

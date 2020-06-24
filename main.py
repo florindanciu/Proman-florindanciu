@@ -16,11 +16,11 @@ def index():
 
 
 @app.route("/add_board", methods=["GET", "POST"])
+@json_response
 def add_board():
     if request.method == "POST":
         new_board = json.loads(request.data.decode("utf-8"))["title"]
         data_handler.add_board(new_board)
-    return 'ok'
 
 
 @app.route("/rename_board", methods=["GET", "POST"])
@@ -29,7 +29,6 @@ def rename_board():
         board_id = json.loads(request.data.decode("utf-8"))["id"]
         new_board_name = json.loads(request.data.decode("utf-8"))["title"]
         data_handler.update_board_title(new_board_name, board_id)
-    return 'ok'
 
 
 @app.route("/get-boards")
@@ -41,11 +40,14 @@ def get_boards():
     return data_handler.get_boards()
 
 
-@app.route("/get-cards", methods=["POST"])
+@app.route("/get-cards/<id>", methods=['POST', 'GET'])
 @json_response
-def get_cards_for_board():
-    board_id = json.loads(request.data.decode("utf-8"))["id"]
-    return data_handler.get_cards_for_board(board_id)
+def get_cards_for_board(id):
+    data = {
+        'cards': data_handler.get_cards_for_board(id),
+        'statuses': data_handler.get_statuses_for_board(id)
+    }
+    return data
 
 
 def main():

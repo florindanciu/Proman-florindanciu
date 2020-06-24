@@ -18,10 +18,11 @@ export let dom = {
         let currentBoard = null
         let boardList = '';
 
-        for(let board of boards){
+        for (let board of boards) {
             boardList += `
-                <details data-id="${board.id}" class="boardContent">
+                <details id='board-${board.id}' data-id="${board.id}" class="boardContent">
                     <summary><div class="item list" style="display: inline">${board.title}</div></summary>
+                    <div class='container'></div>
                 </details>`;
         }
 
@@ -51,18 +52,51 @@ export let dom = {
         let boardContents = document.querySelectorAll(".boardContent")
         boardContents.forEach(content => {
            content.addEventListener("toggle", (e) => {
-                dataHandler.getCardsByBoardId(e.target.dataset.id, (id, content) => {
-                    dom.loadCards(id, content)
-                });
+                if (e.target.open) {
+                    dataHandler.getCardsByBoardId(e.target.dataset.id, (id, content) => {
+                        dom.loadCards(id, content)    
+                    });
+                }
            });
         });
     },
     loadCards: function (boardId, content) {
-        console.log(content, boardId)
-    },
-    showCards: function (cards) {
-        // shows the cards of a board
-        // it adds necessary event listeners also
-    },
+        let cardContainer = document.querySelector('#board-' + boardId).lastElementChild;
+        let statuses = content.statuses;
+
+        let boardContent = `<div class='row'>`;
+        let cardContent = `<div class='row'>`;
+        for (let status of statuses) {
+            boardContent += `
+                <div class='col-sm'>
+                    ${status.title}
+                </div>
+                `
+            cardContent += `
+                <div class='col-sm' data-col='${status.id}'>
+                    <div id='c${boardId}-${status.id}' class='card-container'></div>
+                </div>
+                `
+        }
+        boardContent += `</div>`;
+        cardContent += `</div>`;
+
+        cardContainer.innerHTML = boardContent;
+        cardContainer.innerHTML += cardContent;
+
+        let containers = {};
+        for (let status of statuses) {
+            containers[status.id] = document.querySelector('#c' + boardId + '-' + status.id);
+        }
+        for (let card of content.cards) {
+            let cardHTML = `
+                <div id='${card.id}' class='card'>
+                    ${card.title}
+                </div>
+                `
+            containers[card.status_id].innerHTML += cardHTML;
+        }
+
+    }
     // here comes more features
 };

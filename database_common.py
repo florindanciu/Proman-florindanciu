@@ -8,8 +8,8 @@ import psycopg2.extras
 def get_connection_string():
     # setup connection string
     # to do this, please define these environment variables first
-    user_name = 'gabi'
-    password = 'abc'
+    user_name = 'test'
+    password = 'test123'
     host = 'localhost'
     database_name = 'Proman_db'
 
