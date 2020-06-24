@@ -1,3 +1,36 @@
-#boards {
-    background-color: green;
+.data {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% * (1/4) - 10px - 1px);
+    width: 100%;
+}
+
+.list {
+    border: 1px solid red;
+    display: flex;
+    /*flex-direction: column;*/
+    margin: 10px;
+    flex-wrap: wrap;
+    width: 50%;
+    height: max-content;
+}
+
+.board {
+    margin: 20px;
+    width: 20%;
+    height: max-content;
+    text-align: center;
+    background-color: cadetblue;
+}
+
+#newBoardBtn {
+    margin-top: 5%;
+}
+
+.hidden {
+    display: none;
+}
+
+#addBoardDiv {
+    position: relative;
 }

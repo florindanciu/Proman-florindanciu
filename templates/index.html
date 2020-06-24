@@ -6,7 +6,12 @@
 {% block body %}
         <h1>ProMan</h1>
         <div id="boards"></div>
-        <div class="data"><ul class="list"></ul></div>
+    <div class="data">
         <button id="newBoardBtn">Create new board</button>
+        <div class="hidden" id="addBoardDiv">
+            <input id="newBoard" type="text">
+            <button id="saveBoard">Save</button>
+        </div>
+    </div>
 {% endblock %}
 </html>

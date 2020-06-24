@@ -25,6 +25,15 @@ def get_boards(cursor: RealDictCursor) -> list:
     return cursor.fetchall()
 
 @database_common.connection_handler
+def get_board_id(cursor: RealDictCursor, title) -> list:
+    query = """
+            SELECT id
+            FROM boards
+            WHERE title = %s"""
+    cursor.execute(query, (title,))
+    return cursor.fetchone()
+
+@database_common.connection_handler
 def add_board(cursor: RealDictCursor, title) -> list:
     query = """
             INSERT INTO boards (title)
@@ -32,12 +41,23 @@ def add_board(cursor: RealDictCursor, title) -> list:
     cursor.execute(query, (title,))
 
 @database_common.connection_handler
-def update_board_title(cursor: RealDictCursor, title) -> list:
+def update_board_title(cursor: RealDictCursor, title, id) -> list:
     query = """
         UPDATE boards
         SET title = %s 
         WHERE id = %s;
         """
-    cursor.execute(query, (title,))
+    cursor.execute(query, (title, id,))
+
+@database_common.connection_handler
+def get_cards_for_board(cursor: RealDictCursor, board_id) -> list:
+    query = """
+            SELECT *
+            FROM cards
+            WHERE board_id = %s"""
+    cursor.execute(query, (board_id,))
+    return cursor.fetchall()
+
+
 
 

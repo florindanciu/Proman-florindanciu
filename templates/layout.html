@@ -17,7 +17,9 @@
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     </head>
     <body>
-    {% block body %}
-    {% endblock %}
+    <div class="container-fluid .justify-content-center">
+        {% block body %}
+        {% endblock %}
+    </div>
     </body>
 </html>

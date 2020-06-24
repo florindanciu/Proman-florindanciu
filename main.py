@@ -23,6 +23,15 @@ def add_board():
     return 'ok'
 
 
+@app.route("/rename_board", methods=["GET", "POST"])
+def rename_board():
+    if request.method == "POST":
+        board_id = json.loads(request.data.decode("utf-8"))["id"]
+        new_board_name = json.loads(request.data.decode("utf-8"))["title"]
+        data_handler.update_board_title(new_board_name, board_id)
+    return 'ok'
+
+
 @app.route("/get-boards")
 @json_response
 def get_boards():
@@ -32,13 +41,10 @@ def get_boards():
     return data_handler.get_boards()
 
 
-@app.route("/get-cards/<int:board_id>")
+@app.route("/get-cards", methods=["POST"])
 @json_response
-def get_cards_for_board(board_id: int):
-    """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
-    """
+def get_cards_for_board():
+    board_id = json.loads(request.data.decode("utf-8"))["id"]
     return data_handler.get_cards_for_board(board_id)
 
 

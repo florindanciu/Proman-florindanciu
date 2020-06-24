@@ -17,8 +17,17 @@ export let dataHandler = {
         .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
     _api_post: function (url, data, callback) {
-        // it is not called from outside
-        // sends the data to the API, and calls callback function
+        fetch(url, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())  // parse the response as JSON
+        // .then(json_response => callback(json_response));  // Call the `callback` with the returned object
+        // ToDo check promise status and callback
     },
     init: function () {
     },
@@ -42,13 +51,19 @@ export let dataHandler = {
         // the status is retrieved and then the callback function is called with the status
     },
     getCardsByBoardId: function (boardId, callback) {
-        // the cards are retrieved and then the callback function is called with the cards
+        this._api_post('/get-cards', {'id': boardId}, (response) => {
+            this._data['cards' + boardId] = response;
+            callback(boardId, response);
+        });
     },
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: function (boardTitle, callback) {
-        // creates new board, saves it and calls the callback function with its data
+        this._api_post('/add_board', {'title': boardTitle}, callback)
+    },
+    renameBoard: function (boardTitle, boardId, callback) {
+        this._api_post('/rename_board', {'title': boardTitle, 'id': boardId}, callback)
     },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data
