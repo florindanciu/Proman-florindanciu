@@ -111,7 +111,7 @@ export let dom = {
         }
             
         function allowDrop(event) {
-            let card = document.getElementById(event.dataTransfer.getData('card'));
+            let card = document.getElementById(event.dataTransfer.getData('card'))
             if (card.dataset.board == event.currentTarget.id.slice(1, event.currentTarget.id.indexOf('-'))) {
                 event.preventDefault();
             }
