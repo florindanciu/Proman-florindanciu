@@ -59,15 +59,17 @@ def get_boards():
     return data_handler.get_boards()
 
 
-@app.route("/board/<int:id>/delete", methods=['POST'])
-def delete_board(id):
-    data_handler.delete_board(id)
+@app.route("/delete-board", methods=['POST'])
+def delete_board():
+    board_id = json.loads(request.data.decode("utf-8"))["boardId"]
+    data_handler.delete_board(board_id)
     return True
 
 
-@app.route("/board/<int:board_id>/collumn/<int:collumn_id>/delete", methods=['POST'])
-def delete_collumn(board_id, collumn_id):
-    data_handler.delete_collumn(board_id, collumn_id)
+@app.route("/delete-status", methods=['POST'])
+def delete_status():
+    status_id = json.loads(request.data.decode("utf-8"))["statusId"]
+    data_handler.delete_status(status_id)
     return True
 
 
@@ -105,21 +107,24 @@ def move_card():
     return True
 
 
-@app.route("/card/<int:id>/archive", methods=['POST'])
-def archive_card(id):
-    data_handler.archive_card(id)
+@app.route("/archive-card", methods=['POST'])
+def archive_card():
+    card_id = json.loads(request.data.decode("utf-8"))["cardId"]
+    data_handler.archive_card(card_id)
     return True
 
 
-@app.route("/card/<int:id>/dearchive", methods=['POST'])
-def dearchive_card(id):
-    data_handler.archive_card(id, False)
+@app.route("/dearchive-card", methods=['POST'])
+def dearchive_card():
+    card_id = json.loads(request.data.decode("utf-8"))["cardId"]
+    data_handler.archive_card(card_id, False)
     return True
 
 
-@app.route("/card/<int:id>/delete", methods=['POST'])
-def delete_card(id):
-    data_handler.delete_card(id)
+@app.route("/delete-card", methods=['POST'])
+def delete_card():
+    card_id = json.loads(request.data.decode("utf-8"))["cardId"]
+    data_handler.delete_card(card_id)
     return True
 
 

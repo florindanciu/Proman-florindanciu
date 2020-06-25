@@ -68,5 +68,20 @@ export let dataHandler = {
     },
     createNewStatus: function (boardId, callback) {
         this._api_post('/add-status', {'boardId': boardId}, callback);
+    },
+    deleteBoard: function (boardId, callback) {
+        this._api_post('/delete-board', {'boardId': boardId}, callback);
+    },
+    deleteStatus: function (statusId, callback) {
+        this._api_post('/delete-status', {'statusId': statusId}, callback);
+    },
+    deleteCard: function (cardId, callback) {
+        this._api_post('/delete-card', {'cardId': cardId}, callback);
+    },
+    archiveCard: function (cardId, callback) {
+        this._api_post('/archive-card', {'cardId': cardId}, callback);
+    },
+    dearchiveCard: function (cardId, callback) {
+        this._api_post('/dearchive-card', {'cardId': cardId}, callback);
     }
 };

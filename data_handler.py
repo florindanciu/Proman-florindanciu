@@ -52,12 +52,12 @@ def archive_card(cursor: RealDictCursor, id, state=True) -> list:
 
 
 @database_common.connection_handler
-def delete_collumn(cursor: RealDictCursor, boardId, statusId) -> list:
+def delete_status(cursor: RealDictCursor, statusId) -> list:
     query = """
-        DELETE FROM board_statuses 
-        WHERE board_statuses.board_id = %s AND board_statuses.status_id = %s
+        DELETE FROM statuses 
+        WHERE id = %s
         """
-    cursor.execute(query, (boardId, statusId, ))
+    cursor.execute(query, (statusId, ))
 
 
 @database_common.connection_handler

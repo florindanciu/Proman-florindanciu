@@ -144,3 +144,24 @@ body {
 .navbar {
     z-index: 1;
 }
+
+.add-card-btn, .del-card-btn, .add-status-btn, .del-status-btn, .del-board-btn {
+    display: inline;
+}
+
+.del-card-btn, .add-status-btn, .del-board-btn {
+    float: right;
+}
+
+.card {
+    display: inline-block;
+    width: 100%;
+}
+
+.rename-card, .rename-status {
+    max-width: 70%;
+}
+
+.card-title {
+    text-align: center;
+}
