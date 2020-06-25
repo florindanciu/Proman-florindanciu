@@ -8,12 +8,12 @@ import psycopg2.extras
 def get_connection_string():
     # setup connection string
     # to do this, please define these environment variables first
-    user_name = 'test'
-    password = 'test123'
+    user_name = 'gabi'
+    password = 'abc'
     host = 'localhost'
-    database_name = 'Proman_db'
+    database_name = 'proman_db'
 
-    env_variables_defined = True #user_name and password and host and database_name
+    env_variables_defined = True  # user_name and password and host and database_name
 
     if env_variables_defined:
         # this string describes all info for psycopg2 to connect to the database

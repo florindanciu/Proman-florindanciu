@@ -23,9 +23,9 @@ export let dom = {
                 <details id='board-${board.id}' data-id="${board.id}" class="boardContent">
                     <summary>
                         <div class="item list" style="display: inline">${board.title}</div>
-                        <div class='add-status-btn'><input type="button" value="new"></div>
+                        <div class='add-status-btn'><input type="button" value="Add Status"></div>
                     </summary>
-                    <div class='container'></div>
+                    <div class='card-div'></div>
                 </details>`;
         }
 
@@ -80,7 +80,7 @@ export let dom = {
             boardContent += `
             <div class='col-sm'>
                 <div class='status-title' data-col='${status.id}'>${status.title}</div>
-                <div class='add-card-btn' data-board='${status.board_id}' data-col='${status.id}'><input type="button" value="new"></div>
+                <div class='add-card-btn mt-3' data-board='${status.board_id}' data-col='${status.id}'><input type="button" value="Add Card "></div>
             </div>
             `
             cardContent += `

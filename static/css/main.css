@@ -1,12 +1,13 @@
+body {
+    background-color: #778cb5;
+}
+
 .data {
-    display: flex;
-    flex-wrap: wrap;
     width: calc(100% * (1/4) - 10px - 1px);
     width: 100%;
 }
 
 .list {
-    border: 1px solid red;
     display: flex;
     /*flex-direction: column;*/
     margin: 10px;
@@ -25,6 +26,7 @@
 
 #newBoardBtn {
     margin-top: 5%;
+    position: relative;
 }
 
 .hidden {
@@ -33,4 +35,97 @@
 
 #addBoardDiv {
     position: relative;
+}
+
+#boards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    position: absolute;
+    top: 15%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.container-board {
+    width: 80%;
+    margin: 0 4px;
+    height: max-content;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    -webkit-box-shadow: -6px -5px 8px -3px rgba(0,0,0,0.48);
+    -moz-box-shadow: -6px -5px 8px -3px rgba(0,0,0,0.48);
+    box-shadow: -6px -5px 8px -3px rgba(0,0,0,0.48);;
+}
+
+.boardContent {
+    background-color: #ebecf0;
+    border-radius: 3px;
+    box-sizing: border-box;
+    position: relative;
+    white-space: normal;
+    height: max-content;
+    width: 80%;
+    margin: 10px;
+}
+
+.card-div {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1;
+    min-height: 0;
+    margin: 10px;
+}
+
+.cards {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(9,30,66,.25);
+    cursor: pointer;
+    display: block;
+    margin: 10px;
+    width: 20%;
+    min-height: 20px;
+    position: relative;
+    text-decoration: none;
+    z-index: 0;
+}
+
+.list-card-title {
+    text-align: center;
+    clear: both;
+    display: block;
+    margin: 0 0 4px;
+    overflow: hidden;
+    text-decoration: none;
+    word-wrap: break-word;
+    color: #172b4d;
+}
+
+.list-card-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+    padding: 6px 8px 2px;
+    position: relative;
+    z-index: 10;
+}
+
+.board-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
 }
