@@ -3,6 +3,7 @@ from util import json_response
 
 import data_handler
 import hashing
+import json
 
 app = Flask(__name__)
 app.secret_key = b'D3Z03lRQ_Neft7apw_oGzw'
@@ -55,17 +56,19 @@ def get_boards():
     """
     All the boards
     """
-    pass
+    return data_handler.get_boards()
 
 
 @app.route("/board/<int:id>/delete", methods=['POST'])
 def delete_board(id):
     data_handler.delete_board(id)
+    return True
 
 
 @app.route("/board/<int:board_id>/collumn/<int:collumn_id>/delete", methods=['POST'])
 def delete_collumn(board_id, collumn_id):
     data_handler.delete_collumn(board_id, collumn_id)
+    return True
 
 
 @app.route("/get-cards/<id>")
@@ -97,16 +100,19 @@ def move_card():
 @app.route("/card/<int:id>/archive", methods=['POST'])
 def archive_card(id):
     data_handler.archive_card(id)
+    return True
 
 
 @app.route("/card/<int:id>/dearchive", methods=['POST'])
 def dearchive_card(id):
     data_handler.archive_card(id, False)
+    return True
 
 
 @app.route("/card/<int:id>/delete", methods=['POST'])
 def delete_card(id):
     data_handler.delete_card(id)
+    return True
 
 
 @app.route("/register", methods=['GET', 'POST'])
