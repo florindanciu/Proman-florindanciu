@@ -4,8 +4,16 @@
     <title>Main page</title>
 {% endblock %}
 {% block body %}
-        <h1>ProMan</h1>
-        <div id="boards"></div>
+    <h1>ProMan</h1>
+
+    {% if session['email'] %}
+        <a href="/logout">Log out</a>
+        <p>You are now logged in as {{ user_info['first_name'] }}</p>
+    {% else %}
+        <a class="btn btn-primary" href="/register">Sign In</a>
+    {% endif %}
+
+    <div id="boards"></div>
     <div class="data">
         <button id="newBoardBtn">Create new board</button>
         <div class="hidden" id="addBoardDiv">
@@ -14,4 +22,3 @@
         </div>
     </div>
 {% endblock %}
-</html>

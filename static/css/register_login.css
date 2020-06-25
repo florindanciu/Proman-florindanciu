@@ -1,0 +1,11 @@
+.input-group-addon {
+   color: #fff;
+   background-color: #337ab7;
+}
+
+.form-control, .input-group-addon {
+   border-radius: 0px;
+}
+label{
+  text-align: left !important;
+}
