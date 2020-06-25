@@ -39,23 +39,11 @@ export let dataHandler = {
             callback(response);
         });
     },
-    getBoard: function (boardId, callback) {
-        // the board is retrieved and then the callback function is called with the board
-    },
-    getStatuses: function (callback) {
-        // the statuses are retrieved and then the callback function is called with the statuses
-    },
-    getStatus: function (statusId, callback) {
-        // the status is retrieved and then the callback function is called with the status
-    },
     getCardsByBoardId: function (boardId, callback) {
         this._api_get('/get-cards/' + boardId, (response) => {
             this._data['cards' + boardId] = response;
             callback(boardId, response);
         });
-    },
-    getCard: function (cardId, callback) {
-        // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: function (boardTitle, callback) {
         this._api_post('/add_board', {'title': boardTitle}, (response) => {
@@ -73,7 +61,7 @@ export let dataHandler = {
         this._api_post('/move-card', {'cardId': cardId, 'statusId': statusId}, callback);
     },
     renameCard: function(cardId, title, callback) {
-
+        this._api_post('/rename-card', {'cardId': cardId, 'title': title}, callback);
     },
     renameStatus: function (statusId, title, callback) {
         this._api_post('/rename-status', {'statusId': statusId, 'title': title}, callback);
@@ -81,5 +69,4 @@ export let dataHandler = {
     createNewStatus: function (boardId, callback) {
         this._api_post('/add-status', {'boardId': boardId}, callback);
     }
-    // here comes more features
 };

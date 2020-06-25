@@ -89,6 +89,14 @@ def add_card():
     return True
 
 
+@app.route('/rename-card', methods=['POST'])
+def rename_card():
+    card_id = json.loads(request.data.decode("utf-8"))["cardId"]
+    title = json.loads(request.data.decode("utf-8"))["title"]
+    data_handler.change_card_title(card_id, title)
+    return True
+
+
 @app.route("/move-card", methods=['POST'])
 def move_card():
     card_id = json.loads(request.data.decode("utf-8"))["cardId"]

@@ -135,6 +135,16 @@ def change_card_status(cursor: RealDictCursor, card_id, status_id) -> list:
 
 
 @database_common.connection_handler
+def change_card_title(cursor: RealDictCursor, card_id, title) -> list:
+    query = """
+        UPDATE cards
+        SET title = %s
+        WHERE id = %s
+        """
+    cursor.execute(query, (title, card_id,))
+
+
+@database_common.connection_handler
 def get_statuses_for_board(cursor: RealDictCursor, board_id) -> list:
     query = """
         SELECT id, title, board_id

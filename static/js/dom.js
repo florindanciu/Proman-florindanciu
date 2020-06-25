@@ -118,13 +118,11 @@ export let dom = {
 
         function allowDrop(event) {
             let card = document.getElementById(dragCard);
-            // console.log(event.dataTransfer)
             if (card.dataset.board == event.currentTarget.id.slice(1, event.currentTarget.id.indexOf('-'))) {
                 event.preventDefault();
             }
         }
         function drop(event) {
-            // let card = event.dataTransfer.getData('card');
             let card = document.getElementById(dragCard);
             event.currentTarget.appendChild(card);
             event.preventDefault();
@@ -132,7 +130,6 @@ export let dom = {
         }
         function drag(event) {
             dragCard = event.currentTarget.id;
-            // console.log(event.currentTarget.id)
         }
         
         for (let i in containers) {
