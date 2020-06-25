@@ -37,13 +37,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        <button id="newBoardBtn">Create new board</button>
+                        <div class="hidden" id="addBoardDiv">
+                            <input id="newBoard" type="text">
+                            <button id="saveBoard">Save</button>
+                        </div>
                         {% if session['email'] %}
-                        <li class="nav-item">
+                        <li class="nav-item float-right">
                             <a href="/logout">Log out</a>
                             <p>You are now logged in as {{ user_info['first_name'] }}</p>
                         </li>
                         {% else %}
-                            <li class="nav-item">
+                            <li class="nav-item float-right">
                                 <a class="nav-link" href="/login">Login</a>
                             </li>
                         {% endif %}

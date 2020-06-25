@@ -8,10 +8,6 @@ function init() {
     // loads the boards to the screen
     dom.loadBoards();
 
-    document.getElementById("newBoardBtn").addEventListener("click", () => {
-        document.querySelector("#addBoardDiv").classList.toggle("hidden")
-    });
-
     document.getElementById("saveBoard").addEventListener("click", () => {
         let newTitle = document.querySelector("#newBoard").value
         dataHandler.createNewBoard(newTitle, (data) => {
@@ -19,6 +15,17 @@ function init() {
         });
         document.querySelector("#addBoardDiv").classList.toggle("hidden");
     });
+
+    function flashFlaskTimeout () {
+        let message = document.querySelector('.alert');
+        if (message) {
+            setTimeout(function () {
+            message.remove();
+            }, 2000)
+        }
+    }
+
+    flashFlaskTimeout();
 }
 
 init();

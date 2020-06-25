@@ -124,8 +124,23 @@ body {
 
 .board-container{
     display: flex;
+    margin-top: 5%;
     flex-wrap: wrap;
     flex-direction: column;
     height: 100vh;
     align-items: center;
+}
+
+.card-container {
+    margin-top: 5%;
+    min-height: 50px;
+}
+
+.status-title {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.navbar {
+    z-index: 1;
 }

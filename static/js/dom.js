@@ -18,6 +18,10 @@ export let dom = {
         let currentBoard = null
         let boardList = '';
 
+        document.getElementById("newBoardBtn").addEventListener("click", () => {
+            document.querySelector("#addBoardDiv").classList.toggle("hidden")
+        });
+
         for (let board of boards) {
             boardList += `
                 <details id='board-${board.id}' data-id="${board.id}" class="boardContent">
@@ -110,21 +114,25 @@ export let dom = {
             containers[card.status_id].innerHTML += cardHTML;
         }
             
+        let dragCard;
+
         function allowDrop(event) {
-            let card = document.getElementById(event.dataTransfer.getData('card'));
+            let card = document.getElementById(dragCard);
+            // console.log(event.dataTransfer)
             if (card.dataset.board == event.currentTarget.id.slice(1, event.currentTarget.id.indexOf('-'))) {
                 event.preventDefault();
             }
         }
         function drop(event) {
-            let card = event.dataTransfer.getData('card');
-            card = document.getElementById(card);
+            // let card = event.dataTransfer.getData('card');
+            let card = document.getElementById(dragCard);
             event.currentTarget.appendChild(card);
             event.preventDefault();
             dataHandler.moveCard(card.id.slice(5), event.currentTarget.dataset['col'], () => {});
         }
         function drag(event) {
-            event.dataTransfer.setData('card', event.currentTarget.id);
+            dragCard = event.currentTarget.id;
+            // console.log(event.currentTarget.id)
         }
         
         for (let i in containers) {
