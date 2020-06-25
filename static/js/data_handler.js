@@ -63,10 +63,23 @@ export let dataHandler = {
         });
     },
     renameBoard: function (boardTitle, boardId, callback) {
-        this._api_post('/rename_board', {'title': boardTitle, 'id': boardId}, callback)
+        this._api_post('/rename_board', {'title': boardTitle, 'id': boardId}, callback);
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
+    createNewCard: function (boardId, statusId, callback) {
+        console.log(boardId + '--' + statusId)
+        this._api_post('/add-card', {'boardId': boardId, 'statusId': statusId}, callback);
+    },
+    moveCard: function (cardId, statusId, callback) {
+        this._api_post('/move-card', {'cardId': cardId, 'statusId': statusId}, callback);
+    },
+    renameCard: function(cardId, title, callback) {
+
+    },
+    renameStatus: function (statusId, title, callback) {
+        this._api_post('/rename-status', {'statusId': statusId, 'title': title}, callback);
+    },
+    createNewStatus: function (boardId, callback) {
+        this._api_post('/add-status', {'boardId': boardId}, callback);
     }
     // here comes more features
 };

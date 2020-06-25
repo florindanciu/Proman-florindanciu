@@ -40,6 +40,25 @@ def add_board(cursor: RealDictCursor, title) -> list:
             VALUES (%s);"""
     cursor.execute(query, (title,))
 
+
+@database_common.connection_handler
+def add_status(cursor: RealDictCursor, board_id, title) -> list:
+    query = """
+        INSERT INTO statuses (board_id, title)
+        VALUES (%s, %s)
+        """
+    cursor.execute(query, (board_id, title,))
+
+
+@database_common.connection_handler
+def add_card(cursor: RealDictCursor, board_id, status_id, title) -> list:
+    query = """
+        INSERT INTO cards (board_id, status_id, title, cards_order)
+        VALUES (%s, %s, %s, 0)
+        """
+    cursor.execute(query, (board_id, status_id, title,))
+
+
 @database_common.connection_handler
 def update_board_title(cursor: RealDictCursor, title, id) -> list:
     query = """
@@ -59,14 +78,33 @@ def get_cards_for_board(cursor: RealDictCursor, board_id) -> list:
     cursor.execute(query, (board_id,))
     return cursor.fetchall()
 
+
+@database_common.connection_handler
+def change_card_status(cursor: RealDictCursor, card_id, status_id) -> list:
+    query = """
+        UPDATE cards
+        SET status_id = %s
+        WHERE id = %s
+        """
+    cursor.execute(query, (status_id, card_id,))
+
+
 @database_common.connection_handler
 def get_statuses_for_board(cursor: RealDictCursor, board_id) -> list:
     query = """
-        SELECT board_statuses.status_id AS id, statuses.title
-        FROM board_statuses
-        INNER JOIN statuses
-        ON board_statuses.status_id = statuses.id
-        WHERE board_statuses.board_id = %s
+        SELECT id, title, board_id
+        FROM statuses
+        WHERE board_id = %s
+        ORDER BY id
         """
     cursor.execute(query, (board_id,))
     return cursor.fetchall()
+
+@database_common.connection_handler
+def change_status_title(cursor: RealDictCursor, status_id, title) -> list:
+    query = """
+        UPDATE statuses
+        SET title = %s
+        WHERE id = %s
+        """
+    cursor.execute(query, (title, status_id,))

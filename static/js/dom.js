@@ -21,7 +21,10 @@ export let dom = {
         for (let board of boards) {
             boardList += `
                 <details id='board-${board.id}' data-id="${board.id}" class="boardContent">
-                    <summary><div class="item list" style="display: inline">${board.title}</div></summary>
+                    <summary>
+                        <div class="item list" style="display: inline">${board.title}</div>
+                        <div class='add-status-btn'><input type="button" value="new"></div>
+                    </summary>
                     <div class='container'></div>
                 </details>`;
         }
@@ -59,6 +62,13 @@ export let dom = {
                 }
            });
         });
+
+        document.querySelectorAll('.add-status-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                let parent = e.target.parentNode.parentNode.parentNode;
+                dataHandler.createNewStatus(parent.dataset.id, dom.loadBoards);
+            });
+        });
     },
     loadCards: function (boardId, content) {
         let cardContainer = document.querySelector('#board-' + boardId).lastElementChild;
@@ -68,35 +78,100 @@ export let dom = {
         let cardContent = `<div class='row'>`;
         for (let status of statuses) {
             boardContent += `
-                <div class='col-sm'>
-                    ${status.title}
-                </div>
-                `
+            <div class='col-sm'>
+                <div class='status-title' data-col='${status.id}'>${status.title}</div>
+                <div class='add-card-btn' data-board='${status.board_id}' data-col='${status.id}'><input type="button" value="new"></div>
+            </div>
+            `
             cardContent += `
-                <div class='col-sm' data-col='${status.id}'>
-                    <div id='c${boardId}-${status.id}' class='card-container'></div>
-                </div>
-                `
+            <div class='col-sm'>
+            <div id='c${boardId}-${status.id}' class='card-container' data-col='${status.id}'></div>
+            </div>
+            `
         }
         boardContent += `</div>`;
         cardContent += `</div>`;
-
+        
         cardContainer.innerHTML = boardContent;
         cardContainer.innerHTML += cardContent;
-
+        
+        
+        
         let containers = {};
         for (let status of statuses) {
             containers[status.id] = document.querySelector('#c' + boardId + '-' + status.id);
         }
         for (let card of content.cards) {
             let cardHTML = `
-                <div id='${card.id}' class='card'>
-                    ${card.title}
-                </div>
-                `
+            <div id='card-${card.id}' class='card' data-board='${card.board_id}' draggable='true'>
+                <div class='card-title' data-id='${card.id}'>${card.title}</div>
+            </div>
+            `
             containers[card.status_id].innerHTML += cardHTML;
         }
+            
+        function allowDrop(event) {
+            let card = document.getElementById(event.dataTransfer.getData('card'));
+            if (card.dataset.board == event.currentTarget.id.slice(1, event.currentTarget.id.indexOf('-'))) {
+                event.preventDefault();
+            }
+        }
+        function drop(event) {
+            let card = event.dataTransfer.getData('card');
+            card = document.getElementById(card);
+            event.currentTarget.appendChild(card);
+            event.preventDefault();
+            dataHandler.moveCard(card.id.slice(5), event.currentTarget.dataset['col'], () => {});
+        }
+        function drag(event) {
+            event.dataTransfer.setData('card', event.currentTarget.id);
+        }
+        
+        for (let i in containers) {
+            containers[i].addEventListener('dragover', allowDrop);
+            containers[i].addEventListener('drop', drop);
+        }
+        document.querySelectorAll('.card').forEach((card) => {
+            card.addEventListener('dragstart', drag);
+        });
 
+
+        let currentTitle;
+
+        document.querySelectorAll('.status-title').forEach((status) => {
+            status.addEventListener('click', (e) => {
+                if(currentTitle && currentTitle != e.currentTarget) { currentTitle.innerHTML = currentTitle.firstChild.value; }
+                currentTitle = e.currentTarget;
+                e.target.innerHTML = `<input type='text' class="renameStatus" value="${e.target.innerHTML}">`
+                e.target.firstChild.addEventListener('change', (e) => {
+                    dataHandler.renameStatus(e.target.parentNode.dataset.col, e.target.value, () => {});
+                    e.target.parentNode.innerHTML = e.target.value;
+                    currentTitle = null;
+                });
+            });
+        });
+
+        document.querySelectorAll('.add-card-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                dataHandler.createNewCard(e.target.parentNode.dataset.board, e.target.parentNode.dataset.col, dom.loadBoards);
+            });
+        });
+
+        let currentCard;
+
+        document.querySelectorAll('.card-title').forEach((card) => {
+            card.addEventListener('click', (e) => {
+                if(currentCard && currentCard != e.currentTarget) { currentCard.innerHTML = currentCard.firstChild.value; }
+                currentCard = e.currentTarget;
+                e.target.innerHTML = `<input type='text' class="renameCard" value="${e.target.innerHTML}">`
+                e.target.firstChild.addEventListener('change', (e) => {
+                    dataHandler.renameCard(e.target.parentNode.dataset.id, e.target.value, () => {});
+                    e.target.parentNode.innerHTML = e.target.value;
+                    currentCard = null;
+                });
+            });
+        });
     }
+    
     // here comes more features
 };
