@@ -17,8 +17,15 @@ export let dataHandler = {
         .then(json_response => callback(json_response));  // Call the `callback` with the returned object
     },
     _api_post: function (url, data, callback) {
-        // it is not called from outside
-        // sends the data to the API, and calls callback function
+        fetch(url, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => callback(response));
     },
     init: function () {
     },
@@ -42,16 +49,37 @@ export let dataHandler = {
         // the status is retrieved and then the callback function is called with the status
     },
     getCardsByBoardId: function (boardId, callback) {
-        // the cards are retrieved and then the callback function is called with the cards
+        this._api_get('/get-cards/' + boardId, (response) => {
+            this._data['cards' + boardId] = response;
+            callback(boardId, response);
+        });
     },
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: function (boardTitle, callback) {
-        // creates new board, saves it and calls the callback function with its data
+        this._api_post('/add_board', {'title': boardTitle}, (response) => {
+            callback(response);
+        });
     },
-    createNewCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
+    renameBoard: function (boardTitle, boardId, callback) {
+        this._api_post('/rename_board', {'title': boardTitle, 'id': boardId}, callback);
+    },
+    createNewCard: function (boardId, statusId, callback) {
+        console.log(boardId + '--' + statusId)
+        this._api_post('/add-card', {'boardId': boardId, 'statusId': statusId}, callback);
+    },
+    moveCard: function (cardId, statusId, callback) {
+        this._api_post('/move-card', {'cardId': cardId, 'statusId': statusId}, callback);
+    },
+    renameCard: function(cardId, title, callback) {
+
+    },
+    renameStatus: function (statusId, title, callback) {
+        this._api_post('/rename-status', {'statusId': statusId, 'title': title}, callback);
+    },
+    createNewStatus: function (boardId, callback) {
+        this._api_post('/add-status', {'boardId': boardId}, callback);
     }
     // here comes more features
 };
