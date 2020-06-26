@@ -51,7 +51,7 @@ export let dom = {
             currentBoard = e.target
             e.target.innerHTML = `<input class="rename_board" value="${e.target.innerHTML}">`
             e.target.firstChild.onchange = (e) => {
-                dataHandler.renameBoard(e.currentTarget.value, e.currentTarget.parentNode.dataset['id'], null)
+                dataHandler.renameBoard(e.currentTarget.value, e.currentTarget.parentNode.parentNode.parentNode.dataset['id'], () => {})
                 e.currentTarget.parentNode.innerHTML = e.currentTarget.value
                 currentBoard = null
             };
